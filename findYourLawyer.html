@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdvoMate - Find Your Lawyer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #1A1A1A;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background-color: #1A1A1A;
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            background-color: #e4dac9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1A1A1A;
+        }
+
+        .logo h1 {
+            margin-left: 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            padding-right: 200px;
+            display: flex;
+            list-style: none;
+            align-content: center;
+            
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #3498db;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #3498db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .user-icon:hover {
+            background-color: #2980b9;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #AC9362 0%, #f8f9fa 100%);
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title h1 {
+            font-size: 3rem;
+            color: #000000;
+            margin-bottom: 1rem;
+        }
+
+        /* Search and Filter Section */
+        .search-filter-section {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 5rem;
+        }
+
+        .search-input-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 50px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #779ff5;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+
+        .filters-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #103c67;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            outline: none;
+            background-color: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-select:focus {
+            border-color: #3498db;
+        }
+
+        .search-button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Professional Help Section */
+        .professional-help {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .professional-help h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .professional-help .highlight {
+            color: #1399ec;
+            font-weight: bold;
+        }
+
+        /* Lawyer Cards Carousel */
+        .carousel-section {
+            background-color: white;
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .lawyer-card {
+            min-width: 300px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 0 1rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .lawyer-card:hover {
+            border-color: #3498db;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .lawyer-image {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #e1e8ed, #bdc3c7);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #7f8c8d;
+            position: relative;
+        }
+
+        .lawyer-image::after {
+            content: '👤';
+            font-size: 3rem;
+        }
+
+        .lawyer-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .lawyer-specialty {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .lawyer-location {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+        }
+
+        .lawyer-rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stars {
+            color: #f39c12;            
+        }
+
+        .contact-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .contact-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Navigation Arrows */
+        .carousel-nav {
+            
+            position:absolute ;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(116, 235, 239, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .carousel-nav:hover {
+            background-color: #3498db;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+            .carousel-prev {
+            left: -10px;
+        }
+        
+        .carousel-next {
+            right: -10px;
+        }
+        /* Pagination Dots */
+        .pagination-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #bdc3c7;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #3498db;
+            transform: scale(1.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1A1A1A;
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .feedback-btn {
+            background-color: #e4dac9;
+            color: black;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .feedback-btn:hover {
+            background-color: #d4c4b3;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        /* Responsive Design */
+       
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-placeholder">AM</div>
+                <h1>AdvoMate</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </nav>
+            <div class="user-icon">👤</div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Title -->
+            <div class="page-title">
+                <h1>Find Your Lawyer</h1>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="search-filter-section">
+                <div class="search-input-container">
+                    <input type="text" class="search-input" placeholder="Legal Issue or Lawyer Name">
+                    <span class="search-icon">🔍</span>
+                </div>
+
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label class="filter-label">Filter By:</label>
+                        <select class="filter-select" id="gender-filter">
+                            <option value="">Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">&nbsp;</label>
+                        <select class="filter-select" id="category-filter">
+                            <option value="">Category</option>
+                            <option value="family">Family Law</option>
+                            <option value="criminal">Criminal Defense</option>
+                            <option value="corporate">Corporate Law</option>
+                            <option value="personal-injury">Personal Injury</option>
+                            <option value="immigration">Immigration</option>
+                            <option value="real-estate">Real Estate</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">&nbsp;</label>
+                        <select class="filter-select" id="location-filter">
+                            <option value="">Location</option>
+                            <option value="new-york">New York</option>
+                            <option value="california">California</option>
+                            <option value="texas">Texas</option>
+                            <option value="florida">Florida</option>
+                            <option value="illinois">Illinois</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="search-button">Get Started</button>
+            </div>
+
+            <!-- Professional Help Section -->
+            <div class="professional-help">
+                <h2>Get professional help from our network of <span class="highlight">1,000+</span> lawyers</h2>
+            </div>
+
+            <!-- Lawyer Cards Carousel -->
+            <div class="carousel-section">
+                  <button class="carousel-nav carousel-prev">‹</button>
+                    <button class="carousel-nav carousel-next">›</button>
+                <div class="carousel-container">
+                  
+                    
+                    <div class="carousel-track" id="carousel-track">
+                        <!-- Lawyer Card 1 -->
+                        <div class="lawyer-card">
+                            <div class="lawyer-image"></div>
+                            <div class="lawyer-name">Rebeka Sultana</div>
+                            <div class="lawyer-specialty">Family Law Attorney</div>
+                            <div class="lawyer-location">📍 Mirpur, DHK</div>
+                            <div class="lawyer-rating">
+                                <span class="stars">★★★★★</span>
+                                <span>4.9 (127 reviews)</span>
+                            </div>
+                            <button class="contact-button">Contact Lawyer</button>
+                        </div>
+
+                        <!-- Lawyer Card 2 -->
+                        <div class="lawyer-card">
+                            <div class="lawyer-image"></div>
+                            <div class="lawyer-name">Abdul Kader</div>
+                            <div class="lawyer-specialty">Criminal Defense</div>
+                            <div class="lawyer-location">📍 Uttara, DHK</div>
+                            <div class="lawyer-rating">
+                                <span class="stars">★★★★★</span>
+                                <span>4.8 (94 reviews)</span>
+                            </div>
+                            <button class="contact-button">Contact Lawyer</button>
+                        </div>
+
+                        <!-- Lawyer Card 3 -->
+                        <div class="lawyer-card">
+                            <div class="lawyer-image"></div>
+                            <div class="lawyer-name">Mahbub Mostafa</div>
+                            <div class="lawyer-specialty">Corporate Law</div>
+                            <div class="lawyer-location">📍 Dorga, SYL</div>
+                            <div class="lawyer-rating">
+                                <span class="stars">★★★★★</span>
+                                <span>4.7 (156 reviews)</span>
+                            </div>
+                            <button class="contact-button">Contact Lawyer</button>
+                        </div>
+
+                        <!-- Lawyer Card 4 -->
+                        <div class="lawyer-card">
+                            <div class="lawyer-image"></div>
+                            <div class="lawyer-name">Sabila Khatun</div>
+                            <div class="lawyer-specialty">Personal Injury</div>
+                            <div class="lawyer-location">📍 Mirsarai, CTG</div>
+                            <div class="lawyer-rating">
+                                <span class="stars">★★★★★</span>
+                                <span>4.9 (203 reviews)</span>
+                            </div>
+                            <button class="contact-button">Contact Lawyer</button>
+                        </div>
+
+                        <!-- Lawyer Card 5 -->
+                        <div class="lawyer-card">
+                            <div class="lawyer-image"></div>
+                            <div class="lawyer-name">Rabby Ador</div>
+                            <div class="lawyer-specialty">Immigration Law</div>
+                            <div class="lawyer-location">📍 Mirpur, DHK</div>
+                            <div class="lawyer-rating">
+                                <span class="stars">★★★★★</span>
+                                <span>4.8 (89 reviews)</span>
+                            </div>
+                            <button class="contact-button">Contact Lawyer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination Dots -->
+                <div class="pagination-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                    <span class="dot" data-slide="3"></span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="feedback">
+                <button class="feedback-btn">Provide Feedback</button>
+            </div>
+            <div class="contact-info">
+                <h3>Contact Us</h3>
+                <p>Email: group8@advomate.com</p>
+                <p>Phone: 0123-45679</p>
+                <p><a href="#">www.advomate.com</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.getElementById('carousel-track');
+            const cards = document.querySelectorAll('.lawyer-card');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.querySelector('.carousel-prev');
+            const nextBtn = document.querySelector('.carousel-next');
+            
+            let currentSlide = 0;
+            let cardsPerView = getCardsPerView();
+            const totalSlides = Math.ceil(cards.length / cardsPerView);
+
+            function getCardsPerView() {
+                if (window.innerWidth <= 480) return 1;
+                if (window.innerWidth <= 768) return 2;
+                return 3;
+            }
+
+            function updateCarousel() {
+                const cardWidth = cards[0].offsetWidth + 32; // card width + margin
+                const offset = -currentSlide * cardWidth * cardsPerView;
+                track.style.transform = `translateX(${offset}px)`;
+                
+                // Update dots
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            }
+
+            // Event listeners
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    updateCarousel();
+                });
+            });
+
+            // Auto-rotate carousel
+            setInterval(nextSlide, 5000);
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                cardsPerView = getCardsPerView();
+                updateCarousel();
+            });
+
+            // Search functionality
+            const searchButton = document.querySelector('.search-button');
+            const searchInput = document.querySelector('.search-input');
+
+            searchButton.addEventListener('click', function() {
+                const searchTerm = searchInput.value.trim();
+                const gender = document.getElementById('gender-filter').value;
+                const category = document.getElementById('category-filter').value;
+                const location = document.getElementById('location-filter').value;
+
+                if (searchTerm || gender || category || location) {
+                    alert(`Searching for lawyers with:\nKeyword: ${searchTerm || 'Any'}\nGender: ${gender || 'Any'}\nCategory: ${category || 'Any'}\nLocation: ${location || 'Any'}`);
+                } else {
+                    alert('Please enter a search term or select filters to find lawyers.');
+                }
+            });
+
+            // Filter change handlers
+            document.querySelectorAll('.filter-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    // In a real application, this would filter the results
+                    console.log(`Filter changed: ${this.id} = ${this.value}`);
+                });
+            });
+
+            // Contact button handlers
+            document.querySelectorAll('.contact-button').forEach((button, index) => {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.lawyer-card');
+                    const lawyerName = card.querySelector('.lawyer-name').textContent;
+                    alert(`Contacting ${lawyerName}. In a real application, this would open a contact form or messaging interface.`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
